@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">iDICT</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut pellentesque massa. Morbi accumsan faucibus lacinia. Nunc lacinia neque nisl, in consectetur est scelerisque vel. Pellentesque mattis finibus arcu ac pharetra. Curabitur sagittis pulvinar metus. Praesent in varius magna. Fusce mollis tristique eros in pretium. Vestibulum urna neque, malesuada vel maximus id, volutpat in metus. Cras laoreet ante tellus, vel blandit nisi vehicula quis. Suspendisse eu consequat enim, a ornare nibh. Nam gravida nisi quis enim tincidunt faucibus. Sed elit risus, iaculis vel sagittis ut, vehicula id risus. Etiam porttitor lacus ac tortor finibus tempus. Cras finibus sapien id pellentesque semper. Sed porta porta nisi eu pulvinar. Nam porta vehicula lacus ac faucibus.</string>
+    <string name="preference_file_key">remember_user</string>
+    <string name="searchbox_hint">Bring your myth out!</string>
+</resources>

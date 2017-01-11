@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="tab1G">false</item>
+    <item type="id" name="view1G">false</item>
+    <item type="id" name="tab2G">false</item>
+    <item type="id" name="list_Search">false</item>
+    <item type="id" name="list_History">false</item>
+    <item type="id" name="list_Wordlist">false</item>
+</resources>
