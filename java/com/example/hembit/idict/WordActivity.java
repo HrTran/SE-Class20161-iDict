@@ -1,9 +1,13 @@
 package com.example.hembit.idict;
 
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +29,15 @@ import com.example.hembit.idict.Controller.AppController;
 import com.example.hembit.idict.Controller.WordAdapter;
 import com.example.hembit.idict.Model.User;
 import com.example.hembit.idict.Model.Word;
-import com.example.hembit.idict.WordActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import static android.icu.lang.UProperty.INT_START;
 import static com.example.hembit.idict.R.id.meaning;
 import static com.example.hembit.idict.R.id.pronounce;
 
@@ -47,7 +49,7 @@ public class WordActivity extends AppCompatActivity{
     private Word word;
     private String basicAuth = null;
     private RequestQueue queue;
-    private TextView lbl_pronounce, lbl_meaning;
+    private TextView lbl_pronounce, lbl_meaning, lbl_wordtext;
     private ListView listView;
     private CharSequence Searched_word;
     private List<Word> list_data = new ArrayList<Word>();
@@ -55,6 +57,16 @@ public class WordActivity extends AppCompatActivity{
     private ProgressDialog pDialog;
     private String url;
     private ViewGroup viewGroup;
+    String[] word_kind = {
+            "danh từ",
+            "động từ",
+            "tính từ",
+            "thán từ",
+            "nội động từ",
+            "ngoại động từ",
+            "phó từ",
+            "trạng từ"
+    };
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +85,8 @@ public class WordActivity extends AppCompatActivity{
         lbl_meaning = (TextView) findViewById(meaning);
         if(Searched_word != null){
             //getUserInfo();
-            new GetJSONrequest().execute();
-            Log.d(TAG,"print out" + Searched_word);
+            new GetJSONrequest2().execute();
+            Log.d(TAG,"print out word: " + Searched_word);
         } else {
             Log.d(TAG,"Null search");
             Toast.makeText(getApplicationContext(),"Error: Searched word is null",
@@ -84,6 +96,7 @@ public class WordActivity extends AppCompatActivity{
 
 
     }
+
 
     public void getUserInfo(){
         //JsonObjectRequest jsonObjectRequest = new JsonObjectRequest()
@@ -101,7 +114,7 @@ public class WordActivity extends AppCompatActivity{
                             // response will be a json object
                             Boolean status = response.getBoolean("status");
                             Boolean found = response.getBoolean("found");
-                            Log.d(TAG,"print out" + found);
+                            Log.d(TAG,"volley print out" + found);
                             if (found == true){
                                 setContentView(R.layout.fragment_word);
                                 JSONObject word = response.getJSONObject("word");
@@ -109,9 +122,9 @@ public class WordActivity extends AppCompatActivity{
                                 String pronounce = word.getString("pronounce");
                                 String word_text = word.getString("word");
                                 String meaning = word.getString("meaning");
-                                lbl_pronounce.setText(pronounce);
-                                lbl_meaning.setText(meaning);
-                                Log.d(TAG,"print out" + word_text);
+//                                lbl_pronounce.setText(pronounce);
+//                                lbl_meaning.setText(meaning);
+                                Log.d(TAG,"volley print out" + word_text);
                             } else {
                                 setContentView(R.layout.fragment_suggestion_list);
                                 JSONObject soundex = response.getJSONObject("soundex");
@@ -182,7 +195,7 @@ public class WordActivity extends AppCompatActivity{
     /**
      * Async task class to get json by making HTTP call
      */
-    private class GetJSONrequest extends AsyncTask<Void, Void, Void> {
+    private class GetJSONrequest2 extends AsyncTask<Void, Void, Void> {
 
         String pronounce;
         String word_text;
@@ -215,7 +228,7 @@ public class WordActivity extends AppCompatActivity{
 
                     Boolean status = jsonObj.getBoolean("status");
                     Boolean found = jsonObj.getBoolean("found");
-                    Log.d(TAG,"print out" + found);
+                    Log.d(TAG,"print out: " + found);
                     if (found == true){
                         //setContentView(R.layout.fragment_word);
                         JSONObject word = jsonObj.getJSONObject("word");
@@ -223,11 +236,11 @@ public class WordActivity extends AppCompatActivity{
                         pronounce = word.getString("pronounce");
                         word_text = word.getString("word");
                         meaning = word.getString("meaning");
-//                        lbl_pronounce.setText(pronounce);
-//                        lbl_meaning.setText(meaning);
-                        A_word = new Word(id,pronounce,meaning,"");
+                        // make bold word kind before adding to the adapter
+
+                        A_word = new Word(id,pronounce,meaning, word_text);
                         list_data.add(A_word);
-                        Log.d(TAG,"print out" + word_text);
+                        Log.d(TAG,"print out meaning " + meaning);
                     } else {
 
 
@@ -243,11 +256,6 @@ public class WordActivity extends AppCompatActivity{
                             A_word = new Word(id,"","",word_text);
                             list_data.add(A_word);
                         }
-
-
-
-
-
 
                     }
                 } catch (final JSONException e) {
@@ -297,14 +305,31 @@ public class WordActivity extends AppCompatActivity{
 //
 //            lv.setAdapter(adapter);
             if (list_data.size() == 1) {
+                // Change layout
                 viewGroup.removeAllViews();
                 viewGroup.addView(View.inflate(getApplicationContext(), R.layout.fragment_word, null));
-                //setContentView(R.layout.fragment_word);
+
                 lbl_pronounce = (TextView) findViewById(R.id.pronounce);
                 lbl_meaning = (TextView) findViewById(R.id.meaning);
+                lbl_wordtext = (TextView) findViewById(R.id.word_text);
+
                 lbl_pronounce.setText(list_data.get(0).getWord_pronounce());
-                lbl_meaning.setText(list_data.get(0).getWord_meaning());
-                Log.d(TAG,"check co data hem? "+ list_data.get(0).getWord_pronounce());
+                //lbl_meaning.setText(list_data.get(0).getWord_meaning());
+                lbl_wordtext.setText(list_data.get(0).getWord_text());
+
+                final SpannableStringBuilder str = new SpannableStringBuilder(list_data.get(0).getWord_meaning());
+                Log.d(TAG,"check co data hem? "+ list_data.get(0).getWord_pronounce()
+                                                + list_data.get(0).getWord_text()
+                                                 + list_data.get(0).getWord_meaning());
+                for(int i = 0; i < word_kind.length; i++){
+                    int position = list_data.get(0).getWord_meaning().indexOf(word_kind[i]);
+                    if (position > 0){
+
+                        str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), position, position + word_kind[i].length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+                lbl_meaning.setText(str);
+                //Log.d(TAG,"check co data hem? "+ list_data.get(0).getWord_pronounce());
             }
             listView.setAdapter(new WordAdapter(getApplicationContext() , list_data));
             listView.setFastScrollEnabled(true);
