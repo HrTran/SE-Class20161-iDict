@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment{
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -123,14 +124,15 @@ public class MainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             EditText searchView = (EditText) rootView.findViewById(R.id.searchView);
 
-            searchView.setOnEditorActionListener(new TextView.OnEditorActionListener()
+            searchView.setOnEditorActionListener(new EditText.OnEditorActionListener()
             {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
                 {
                     String input;
-                    if(
-                            event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+                    if(actionId == EditorInfo.IME_ACTION_SEARCH
+                            || actionId == EditorInfo.IME_NULL
+                            || event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
                     {
                         input= v.getText().toString();
                         Intent intent = new Intent(getActivity(), WordActivity.class);
@@ -141,31 +143,6 @@ public class MainActivity extends AppCompatActivity {
                     return false; // pass on to other listeners.
                 }
             });
-
-//            searchView.addTextChangedListener(new TextWatcher() {
-//
-//                public void afterTextChanged(Editable s) {
-//                }
-//
-//                public void beforeTextChanged(CharSequence s, int start,
-//                                              int count, int after) {
-//                }
-//
-//                public void onTextChanged(CharSequence s, int start,
-//                                          int before, int count) {
-////                    TextView myOutputBox = (TextView) findViewById(R.id.myOutputBox);
-////                    myOutputBox.setText(s);
-//                    if (s.equals("hello") ){
-//                        Intent intent = new Intent(getActivity(), WordActivity.class);
-//                        intent.putExtra("Pass_childId",s);
-//                        startActivity(intent);
-//                    }
-//                }
-//            });
-
-
-
-
             return rootView;
         }
     }

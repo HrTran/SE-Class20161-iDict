@@ -17,23 +17,15 @@
         <!--<Button android:id="@id/tab2G" android:layout_width="0.0dip" android:layout_height="wrap_content" android:text="Wordlist" android:layout_weight="1.0" style="\@style/tab_btn" />-->
     <!--</LinearLayout>-->
 
-    <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <!--<SearchView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="35dip"-->
-            <!--android:id="@+id/searchView"-->
-            <!--android:background="@drawable/round_rect_shape" />-->
         <EditText
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_marginTop="15dp"
-            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:imeOptions="actionSearch"
+            android:inputType="textAutoCorrect"
             android:drawableLeft="@mipmap/ic_search"
             android:drawableStart="@mipmap/ic_search"
             android:hint="@string/searchbox_hint" />
@@ -49,7 +41,4 @@
         <!--</AutoCompleteTextView>-->
         <!--<View android:id="@id/view1G" android:layout_below="@+id/searchView" android:background="@color/main_color_gray_light" android:layout_width="match_parent" android:layout_height="1.0dip" android:layout_marginTop="3.0dip" android:layout_marginBottom="3.0dip" />-->
 
-
-
-    </RelativeLayout>
 </LinearLayout>

@@ -7,43 +7,51 @@
     android:weightSum="1">
 
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:orientation="horizontal">
+        android:layout_height="28dp">
+
         <TextView
-            android:text="TextView"
-            android:layout_width="280dp"
+            android:text="word_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/blue_sky"
             android:textSize="@dimen/txt_20sp"
             android:textStyle="bold"
-            android:id="@+id/word_text" />
+            android:id="@+id/word_text"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"/>
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_sound"
-            android:id="@+id/imageView"
-            android:layout_gravity="right"
-            android:layout_weight="1" />
+            app:srcCompat="@mipmap/ic_sound_26"
+            android:id="@+id/word_sound"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="[ phien am here]"
+        android:text="word_pronounce"
         android:textColor="@color/black"
-        android:id="@+id/pronounce" />
+        android:id="@+id/pronounce"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textColor="@color/black"
         android:inputType="textMultiLine"
-        android:id="@+id/meaning" />
+        android:id="@+id/meaning"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"/>
 
 </LinearLayout>
