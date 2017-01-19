@@ -8,7 +8,7 @@ import android.util.Base64;
 
 public class ConnectionInfo {
     public static final String HOST = "http://52.36.12.106/";
-    private String credentials = "luong@luong.com" + ":" + "1";
+    private String credentials = "sam@sam.com" + ":" + "sam123";
     public static String au = "1";
 
     private String auth = "Basic "

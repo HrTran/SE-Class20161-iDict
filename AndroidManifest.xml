@@ -33,6 +33,49 @@
                 android:value="com.example.hembit.idict.MainActivity" />
         </activity>
 
+        <!-- Login activity -->
+        <activity
+            android:name=".LoginActivity"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hembit.idict.MainActivity" />
+        </activity>
+
+        <!-- Register activity -->
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".LoginActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hembit.idict.LoginActivity" />
+        </activity>
+
+        <!-- History activity -->
+        <activity
+            android:name=".HistoryActivity"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hembit.idict.MainActivity" />
+        </activity>
+
+        <!-- Login activity -->
+        <activity
+            android:name=".WordListActivity"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hembit.idict.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

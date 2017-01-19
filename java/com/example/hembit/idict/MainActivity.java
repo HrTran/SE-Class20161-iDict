@@ -1,6 +1,9 @@
 package com.example.hembit.idict;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +26,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -59,14 +76,14 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
     }
 
@@ -102,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private int isLogin = 0;
+        private String user_email;
+        private String token;
+        private Context context;
+        private String TAG = "";
 
         public PlaceholderFragment() {
         }
@@ -123,6 +145,17 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             EditText searchView = (EditText) rootView.findViewById(R.id.searchView);
+            final Button login_button = (Button) rootView.findViewById(R.id.button_login);
+            Button history_button = (Button) rootView.findViewById(R.id.button_history);
+            Button wordlist_button = (Button) rootView.findViewById(R.id.button_wordlist);
+            Button logout_button = (Button) rootView.findViewById(R.id.button_logout);
+
+            Bundle extras = getActivity().getIntent().getExtras();
+            if (extras != null) {
+                isLogin = extras.getInt("Logged_in");
+                user_email = extras.getString("email_user");
+                token = extras.getString("token");
+            }
 
             searchView.setOnEditorActionListener(new EditText.OnEditorActionListener()
             {
@@ -137,13 +170,111 @@ public class MainActivity extends AppCompatActivity {
                         input= v.getText().toString();
                         Intent intent = new Intent(getActivity(), WordActivity.class);
                         intent.putExtra("Pass_word",input);
+                        intent.putExtra("isLoggedin",isLogin);
+                        intent.putExtra("token",token);
+                        Log.d("Send token", "onEditorAction: " + token);
                         startActivity(intent);
                         return true; // consume.
                     }
                     return false; // pass on to other listeners.
                 }
             });
+
+            if (isLogin == 0) {
+                login_button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // Perform action on click
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+            } else {
+                login_button.setText("Xin chao, " + user_email);
+
+            }
+
+            history_button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Perform action on click
+                    Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                    startActivity(intent);
+                }
+            });
+            wordlist_button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Perform action on click
+                    Intent intent = new Intent(getActivity(), WordListActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            logout_button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Perform action on click
+                    context = getContext();
+                    if (isNetworkConnected(context)) {
+                        // if is connected to network
+                        String myUrl = ConnectionInfo.HOST + "api/auth/logout";
+                        String response = null;
+                        try {
+                            URL url = new URL(myUrl);
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                            conn.setRequestProperty("token",token);
+                            conn.setRequestMethod("GET");
+                            // read the response
+                            InputStream in = new BufferedInputStream(conn.getInputStream());
+                            response = convertStreamToString(in);
+                        } catch (MalformedURLException e) {
+                            Log.e(TAG, "MalformedURLException: " + e.getMessage());
+                        } catch (ProtocolException e) {
+                            Log.e(TAG, "ProtocolException: " + e.getMessage());
+                        } catch (IOException e) {
+                            Log.e(TAG, "IOException: " + e.getMessage());
+                        } catch (Exception e) {
+                            Log.e(TAG, "Exception: " + e.getMessage());
+                        }
+                    } else {
+                    // if not, display a warning
+                        Toast.makeText(context, "No network connection available.", Toast.LENGTH_SHORT).show();
+                    }
+                    login_button.setText("Login");
+                    isLogin = 0;
+                    Intent i = new Intent(getActivity(), getActivity().getClass());  //your class
+                    startActivity(i);
+                    getActivity().finish();
+                }
+            });
+
             return rootView;
+        }
+
+        public static boolean isNetworkConnected(Context c) {
+            ConnectivityManager conManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = conManager.getActiveNetworkInfo();
+            return ( netInfo != null && netInfo.isConnected() );
+        }
+
+        public static String convertStreamToString(InputStream is) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append('\n');
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return sb.toString();
         }
     }
 

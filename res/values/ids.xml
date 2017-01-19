@@ -6,4 +6,7 @@
     <item type="id" name="list_Search">false</item>
     <item type="id" name="list_History">false</item>
     <item type="id" name="list_Wordlist">false</item>
+    <item type="id" name="emailText">false</item>
+    <item type="id" name="passwordText">false</item>
+    <item type="id" name="rememberCheckBox">false</item>
 </resources>

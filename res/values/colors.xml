@@ -20,4 +20,7 @@
     <color name="dot_bar_bg">#ff1c1c1c</color>
     <color name="main_color_gray_light">#ffb4b4b4</color>
     <color name="tab_bg_color">#ffe7e7e7</color>
+    <color name="grey">#DDDDDD</color>
+    <color name="light_grey">#EEEEEE</color>
+    <color name="white_transparent">#99FFFFFF</color>
 </resources>

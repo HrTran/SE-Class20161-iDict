@@ -18,18 +18,47 @@
     <!--</LinearLayout>-->
 
 
-        <EditText
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:maxLines="1"
-            android:imeOptions="actionSearch"
-            android:inputType="textAutoCorrect"
-            android:drawableLeft="@mipmap/ic_search"
-            android:drawableStart="@mipmap/ic_search"
-            android:hint="@string/searchbox_hint" />
-        <!--<AutoCompleteTextView-->
+    <EditText
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:maxLines="1"
+        android:imeOptions="actionSearch"
+        android:inputType="textAutoCorrect"
+        android:drawableLeft="@mipmap/ic_search"
+        android:drawableStart="@mipmap/ic_search"
+        android:hint="@string/searchbox_hint" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_login"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        android:text="History"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_history"
+        android:background="@android:drawable/dialog_holo_light_frame" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Word list"
+        android:id="@+id/button_wordlist"
+        android:background="@android:drawable/dialog_holo_light_frame"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:id="@+id/button_logout"
+        android:background="@android:drawable/dialog_holo_light_frame"/>
+    <!--<AutoCompleteTextView-->
             <!--android:id="@+id/autoCompleteTextView1"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->

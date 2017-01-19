@@ -23,11 +23,13 @@ public class HttpHandler {
     public HttpHandler() {
     }
 
-    public String makeServiceCall(String reqUrl) {
+    public String makeServiceCall(String reqUrl, String token) {
         String response = null;
         try {
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("token",token);
             conn.setRequestMethod("GET");
             // read the response
             InputStream in = new BufferedInputStream(conn.getInputStream());
@@ -44,7 +46,7 @@ public class HttpHandler {
         return response;
     }
 
-    private String convertStreamToString(InputStream is) {
+    public String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
 

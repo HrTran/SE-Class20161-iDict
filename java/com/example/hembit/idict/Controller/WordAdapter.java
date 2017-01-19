@@ -52,16 +52,16 @@ public class WordAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.fragment_word, null);
             holder = new ViewHolder();
             holder.word_text = (TextView) convertView.findViewById(R.id.word_text);
-            holder.word_pronounce = (TextView) convertView.findViewById(R.id.pronounce);
-            holder.word_meaning = (TextView) convertView.findViewById(R.id.meaning);
+//            holder.word_pronounce = (TextView) convertView.findViewById(R.id.pronounce);
+//            holder.word_meaning = (TextView) convertView.findViewById(R.id.meaning);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         Word word = this.listData.get(position);
         holder.word_text.setText(String.valueOf(word.getWord_text()) );
-        holder.word_pronounce.setText(String.valueOf(word.getWord_pronounce()));
-        holder.word_meaning.setText(String.valueOf(word.getWord_meaning()));
+//        holder.word_pronounce.setText(String.valueOf(word.getWord_pronounce()));
+//        holder.word_meaning.setText(String.valueOf(word.getWord_meaning()));
         return convertView;
     }
 
