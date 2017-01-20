@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hembit.idict.MainActivity$PlaceholderFragment"
+    tools:context="com.example.hembit.idict.View.MainActivity$PlaceholderFragment"
     android:orientation="vertical">
     <!--3 button-->
     <!--<LinearLayout android:orientation="horizontal" android:background="@color/tab_bg_color" android:layout_width="wrap_content" android:layout_height="35dip">-->
@@ -58,6 +58,12 @@
         android:text="Log out"
         android:id="@+id/button_logout"
         android:background="@android:drawable/dialog_holo_light_frame"/>
+
+    <TextView
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/restoreFragment" />
     <!--<AutoCompleteTextView-->
             <!--android:id="@+id/autoCompleteTextView1"-->
             <!--android:layout_width="match_parent"-->
